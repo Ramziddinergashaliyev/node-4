@@ -61,46 +61,46 @@ class UsersController {
     }
   }
 
-  // async post(req, res) {
-  //   try {
-  //     const { username, password } = req.body;
-  //     const user = await Users.findOne({ username });
+  async post(req, res) {
+    try {
+      const { username, password } = req.body;
+      const user = await Users.findOne({ username });
 
-  //     if (!user) {
-  //       return res.status(400).json({
-  //         msg: "username xato",
-  //         variant: "succes",
-  //         payload: user,
-  //       });
-  //     }
+      if (!user) {
+        return res.status(400).json({
+          msg: "username xato",
+          variant: "succes",
+          payload: user,
+        });
+      }
 
-  //     bcrypt.compare(password, user.password, function (err, response) {
-  //       const token = jwt.sign(
-  //         { _id: user._id, role: "admin" },
-  //         process.env.SECRET_KEY
-  //       );
-  //       if (response) {
-  //         return res.status(200).json({
-  //           msg: "Log in",
-  //           variant: "succes",
-  //           payload: { user, token },
-  //         });
-  //       } else {
-  //         return res.status(400).json({
-  //           msg: "password xato",
-  //           variant: "error",
-  //           payload: null,
-  //         });
-  //       }
-  //     });
-  //   } catch {
-  //     res.status(500).json({
-  //       msg: "Server error",
-  //       variant: "error",
-  //       payload: null,
-  //     });
-  //   }
-  // }
+      bcrypt.compare(password, user.password, function (err, response) {
+        const token = jwt.sign(
+          { _id: user._id, role: "admin" },
+          process.env.SECRET_KEY
+        );
+        if (response) {
+          return res.status(200).json({
+            msg: "Log in",
+            variant: "succes",
+            payload: { user, token },
+          });
+        } else {
+          return res.status(400).json({
+            msg: "password xato",
+            variant: "error",
+            payload: null,
+          });
+        }
+      });
+    } catch {
+      res.status(500).json({
+        msg: "Server error",
+        variant: "error",
+        payload: null,
+      });
+    }
+  }
 
   async delete(req, res) {
     try {
